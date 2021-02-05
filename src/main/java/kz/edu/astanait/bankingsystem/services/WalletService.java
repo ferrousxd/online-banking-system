@@ -15,7 +15,7 @@ public class WalletService {
         this.walletRepository = walletRepository;
     }
 
-    public Wallet getRole(Long walletId) {
+    public Wallet getWallet(Long walletId) {
         return walletRepository.findById(walletId).orElseThrow(() -> new IllegalStateException("Wallet not found"));
     }
 }

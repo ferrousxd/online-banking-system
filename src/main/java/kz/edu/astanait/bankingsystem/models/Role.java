@@ -1,10 +1,15 @@
 package kz.edu.astanait.bankingsystem.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "roles")
 public class Role {
 
@@ -18,14 +23,22 @@ public class Role {
             strategy = GenerationType.SEQUENCE,
             generator = "role_sequence"
     )
+    @Column(name = "id")
     private Long id;
 
+    @NonNull
+    @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinTable(
             name = "role_authority",
             joinColumns = @JoinColumn(name = "role_id"),
@@ -41,42 +54,5 @@ public class Role {
     public void removeAuthority(Authority authority) {
         authorities.remove(authority);
         authority.getRoles().remove(this);
-    }
-
-    public Role() {
-
-    }
-
-    public Role(String name) {
-        this.name = name;
-
-    }
-
-    public Role(Long id, String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
     }
 }

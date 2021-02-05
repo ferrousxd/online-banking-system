@@ -1,8 +1,13 @@
 package kz.edu.astanait.bankingsystem.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -16,64 +21,22 @@ public class User {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
+    @Column(name = "id")
     private Long id;
 
+    @NonNull
+    @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NonNull
+    @Column(name = "password")
     private String password;
 
+    @NonNull
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
+    @JoinColumn(name = "role_id")
     private Role role;
-
-    public User() {
-
-    }
-
-    public User(String phoneNumber, String password, Role role) {
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User(Long id, String phoneNumber, String password, Role role) {
-        this.id = id;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

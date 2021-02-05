@@ -1,15 +1,22 @@
 package kz.edu.astanait.bankingsystem.services;
 
-import kz.edu.astanait.bankingsystem.models.Role;
+import kz.edu.astanait.bankingsystem.models.Authority;
 import kz.edu.astanait.bankingsystem.models.User;
 import kz.edu.astanait.bankingsystem.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -18,14 +25,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("User not found"));
-    }
+    @Override
+    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+        User user = userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> new UsernameNotFoundException("User with such phone number does not exist"));
 
-    @Transactional
-    public void updateUser(Long userId, String phoneNumber, Role role) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("User not found"));
-        user.setPhoneNumber(phoneNumber);
-        user.setRole(role);
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        Set<Authority> authorities = user.getRole().getAuthorities();
+
+        authorities.forEach(authority -> grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName())));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getPhoneNumber(),
+                user.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                grantedAuthorities
+        );
     }
 }

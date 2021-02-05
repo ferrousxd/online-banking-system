@@ -1,8 +1,13 @@
 package kz.edu.astanait.bankingsystem.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "wallets")
 public class Wallet {
 
@@ -16,73 +21,26 @@ public class Wallet {
             strategy = GenerationType.SEQUENCE,
             generator = "wallet_sequence"
     )
+    @Column(name = "id")
     private Long id;
+
+    @NonNull
+    @Column(name = "balance_kzt")
     private Double balanceKzt;
+
+    @NonNull
+    @Column(name = "balance_usd")
     private Double balanceUsd;
+
+    @NonNull
+    @Column(name = "balance_eur")
     private Double balanceEur;
 
+    @NonNull
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
+    @JoinColumn(name = "user_id")
     private User user;
-
-    public Wallet() {
-
-    }
-
-    public Wallet(Double balanceKzt, Double balanceUsd, Double balanceEur, User user) {
-        this.balanceKzt = balanceKzt;
-        this.balanceUsd = balanceUsd;
-        this.balanceEur = balanceEur;
-        this.user = user;
-    }
-
-    public Wallet(Long id, Double balanceKzt, Double balanceUsd, Double balanceEur, User user) {
-        this.id = id;
-        this.balanceKzt = balanceKzt;
-        this.balanceUsd = balanceUsd;
-        this.balanceEur = balanceEur;
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getBalanceKzt() {
-        return balanceKzt;
-    }
-
-    public void setBalanceKzt(Double balanceKzt) {
-        this.balanceKzt = balanceKzt;
-    }
-
-    public Double getBalanceUsd() {
-        return balanceUsd;
-    }
-
-    public void setBalanceUsd(Double balanceUsd) {
-        this.balanceUsd = balanceUsd;
-    }
-
-    public Double getBalanceEur() {
-        return balanceEur;
-    }
-
-    public void setBalanceEur(Double balanceEur) {
-        this.balanceEur = balanceEur;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

@@ -7,7 +7,6 @@ import kz.edu.astanait.bankingsystem.models.Wallet;
 import kz.edu.astanait.bankingsystem.repositories.RoleRepository;
 import kz.edu.astanait.bankingsystem.repositories.UserRepository;
 import kz.edu.astanait.bankingsystem.repositories.WalletRepository;
-import kz.edu.astanait.bankingsystem.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,12 +16,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class BankingSystemApplication {
-
-	private final UserService userService;
-
-	public BankingSystemApplication(UserService userService) {
-		this.userService = userService;
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(BankingSystemApplication.class, args);
@@ -42,22 +35,16 @@ public class BankingSystemApplication {
 			adminRole.addAuthority(userPage);
 			adminRole.addAuthority(adminPage);
 
-			adminRole.removeAuthority(userPage);
-
 			roleRepository.saveAll(
 					List.of(userRole, adminRole, guestRole)
 			);
 
-			User chingiz = new User("87779913657", "123", userRole);
-			User chingiz2 = new User("88005553535", "password123", guestRole);
-			User admin = new User("admin", "pswerd", adminRole);
-			User admin2 = new User("admin222", "pswerd123123", adminRole);
-
-			System.out.println(chingiz);
-			System.out.println(chingiz2);
-			System.out.println(admin);
-			System.out.println(admin2);
-
+			// $2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd. - 123
+			// $2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy - password123
+			User chingiz = new User("87779913657", "$2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd.", userRole);
+			User chingiz2 = new User("88005553535", "$2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd.", guestRole);
+			User admin = new User("admin", "$2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy", adminRole);
+			User admin2 = new User("admin222", "$2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy", adminRole);
 			userRepository.saveAll(
 					List.of(chingiz, chingiz2, admin, admin2)
 			);
@@ -71,8 +58,6 @@ public class BankingSystemApplication {
 			walletRepository.saveAll(
 					List.of(wallet1, wallet2, wallet3, wallet4, wallet5)
 			);
-
-			userService.updateUser(chingiz.getId(), "1234567890", adminRole);
 		};
 	}
 }
