@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Not Found</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+<div th:insert="~{includes/header :: header}"></div>
+
+<main class="container">
+    <div class="text-center">
+        <p class="display-1">404</p>
+        <p class="h1">Resource not found</p>
+    </div>
+    <div th:insert="~{includes/footer :: footer}"></div>
+</main>
+
+</body>
+</html>

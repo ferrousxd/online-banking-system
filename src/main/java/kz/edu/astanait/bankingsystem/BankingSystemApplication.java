@@ -1,12 +1,12 @@
 package kz.edu.astanait.bankingsystem;
 
 import kz.edu.astanait.bankingsystem.models.Authority;
+import kz.edu.astanait.bankingsystem.models.Card;
 import kz.edu.astanait.bankingsystem.models.Role;
 import kz.edu.astanait.bankingsystem.models.User;
-import kz.edu.astanait.bankingsystem.models.Wallet;
 import kz.edu.astanait.bankingsystem.repositories.RoleRepository;
 import kz.edu.astanait.bankingsystem.repositories.UserRepository;
-import kz.edu.astanait.bankingsystem.repositories.WalletRepository;
+import kz.edu.astanait.bankingsystem.repositories.CardRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,41 +22,40 @@ public class BankingSystemApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, WalletRepository walletRepository) {
+	public CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CardRepository walletRepository) {
 		return args -> {
-			Authority adminPage = new Authority("Admin Page");
-			Authority userPage = new Authority("User Page");
+			Authority adminPage = new Authority("wallet:create");
+			Authority userPage = new Authority("wallet:destroy");
 
-			Role userRole = new Role("User");
-			Role adminRole = new Role("Admin");
-			Role guestRole = new Role("Guest");
+			Role userRole = new Role("USER");
+			Role adminRole = new Role("ADMIN");
 
 			userRole.addAuthority(userPage);
 			adminRole.addAuthority(userPage);
 			adminRole.addAuthority(adminPage);
 
 			roleRepository.saveAll(
-					List.of(userRole, adminRole, guestRole)
+					List.of(userRole, adminRole)
 			);
 
 			// $2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd. - 123
 			// $2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy - password123
 			User chingiz = new User("87779913657", "$2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd.", userRole);
-			User chingiz2 = new User("88005553535", "$2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd.", guestRole);
+			User chingiz2 = new User("88005553535", "$2y$04$TuwOGxj7z0wtUjrj1u.ML.2cGqo5K2RzkUvcdxknObGcm45rXKLd.", userRole);
 			User admin = new User("admin", "$2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy", adminRole);
 			User admin2 = new User("admin222", "$2y$04$1q3vUA1Y5gy.KGgZUGjDuOhG9EwttoWH7ZXvpqQTviQXDAK.OTJCy", adminRole);
 			userRepository.saveAll(
 					List.of(chingiz, chingiz2, admin, admin2)
 			);
 
-			Wallet wallet1 = new Wallet(200.0, 0.0, 0.0, chingiz);
-			Wallet wallet2 = new Wallet(1000.0, 10.0, 2.0, chingiz);
-			Wallet wallet3 = new Wallet(1000000.0, 10000000000.0, 1.0, admin);
-			Wallet wallet4 = new Wallet(10.0, 10.0, 10.0, chingiz2);
-			Wallet wallet5 = new Wallet(100000.0, 1000005.5, 1.5, chingiz2);
+			Card card1 = new Card(200.0, 0.0, 0.0, chingiz);
+			Card card2 = new Card(1000.0, 10.0, 2.0, chingiz);
+			Card card3 = new Card(1000000.0, 10000000000.0, 1.0, admin);
+			Card card4 = new Card(10.0, 10.0, 10.0, chingiz2);
+			Card card5 = new Card(100000.0, 1000005.5, 1.5, chingiz2);
 
 			walletRepository.saveAll(
-					List.of(wallet1, wallet2, wallet3, wallet4, wallet5)
+					List.of(card1, card2, card3, card4, card5)
 			);
 		};
 	}

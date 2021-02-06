@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body class="text-center">
+    <main class="form-login">
+        <form method="POST" th:action="@{/login}">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div th:if="${param.error}" class="alert alert-danger">
+                Incorrect login or password
+            </div>
+
+            <div th:if="${param.logout}" class="alert alert-info">
+                You've been logged out
+            </div>
+
+            <label for="phoneNumber" class="visually-hidden">Phone Number</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" required autofocus>
+
+            <label for="password" class="visually-hidden">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+    </main>
+</body>
+</html>

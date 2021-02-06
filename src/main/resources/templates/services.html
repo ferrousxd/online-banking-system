@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Services</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<div th:insert="~{includes/header :: header}"></div>
+
+<main class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Services</h1>
+        <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap
+            example. It’s built with default Bootstrap components and utilities with little customization.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Transfer money to card of another bank</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>30 users included</li>
+                        <li>15 GB of storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <a href="/single-service?id=1" class="w-100 btn btn-lg btn-success">Contact us</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Transfer money to another wallet of this bank</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>30 users included</li>
+                        <li>15 GB of storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <a href="/single-service?id=2" class="w-100 btn btn-lg btn-success">Contact us</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Transfer money to another wallet of yours</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>30 users included</li>
+                        <li>15 GB of storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <a href="/single-service?id=3" class="w-100 btn btn-lg btn-success">Contact us</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Mobile Services</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>30 users included</li>
+                        <li>15 GB of storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <a href="/single-service?id=4" class="w-100 btn btn-lg btn-success">Contact us</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">House Services</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>30 users included</li>
+                        <li>15 GB of storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <a href="/single-service?id=5" class="w-100 btn btn-lg btn-success">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="~{includes/footer :: footer}"></div>
+</main>
+
+</body>
+</html>

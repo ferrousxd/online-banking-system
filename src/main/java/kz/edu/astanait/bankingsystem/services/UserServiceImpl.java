@@ -1,8 +1,10 @@
 package kz.edu.astanait.bankingsystem.services;
 
+import kz.edu.astanait.bankingsystem.exceptions.UserNotFoundException;
 import kz.edu.astanait.bankingsystem.models.Authority;
 import kz.edu.astanait.bankingsystem.models.User;
 import kz.edu.astanait.bankingsystem.repositories.UserRepository;
+import kz.edu.astanait.bankingsystem.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Service
-public class UserService implements UserDetailsService {
+@Service("userDetailsServiceImpl")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -32,16 +34,47 @@ public class UserService implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         Set<Authority> authorities = user.getRole().getAuthorities();
 
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
         authorities.forEach(authority -> grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName())));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getPhoneNumber(),
                 user.getPassword(),
-                true,
-                true,
-                true,
-                true,
                 grantedAuthorities
         );
+    }
+
+    public User findByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User save(User entity) {
+        return userRepository.save(entity);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
+
+    @Override
+    public void delete(User entity) {
+        userRepository.delete(entity);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public Long count() {
+        return userRepository.count();
     }
 }

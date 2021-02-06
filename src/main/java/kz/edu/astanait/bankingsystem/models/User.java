@@ -1,5 +1,6 @@
 package kz.edu.astanait.bankingsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class User {
     private Long id;
 
     @NonNull
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
     @NonNull
@@ -33,6 +34,7 @@ public class User {
     private String password;
 
     @NonNull
+    @JsonBackReference
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
