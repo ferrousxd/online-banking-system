@@ -2,9 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Wallets</title>
+    <title>Cards</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
 </head>
 <body>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+    <div th:if="${param.error}" class="alert alert-danger">
+        Not enough money!
+    </div>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        Conversion was successful
+    </div>
+
+    <div class="row mb-2">
+        <th:block th:each="card : ${currentUserCards}">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success" th:text="${card.getNumber()}">Card Number</strong>
+                        <p class="card-text mb-auto" th:text="'Balance in KZT: ' + ${card.getBalanceKzt()}">Balance in KZT</p>
+                        <p class="card-text mb-auto" th:text="'Balance in USD: ' + ${card.getBalanceUsd()}">Balance in USD</p>
+                        <p class="card-text mb-auto" th:text="'Balance in EUR: ' + ${card.getBalanceEur()}">Balance in EUR</p>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <form method="POST" th:action="@{/cards/convert}">
+        <div class="form-group">
+            <label class="form-label" for="cardId">Choose your card</label>
+            <select class="form-control" id="cardId" name="cardId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">User Card</option>
+                </th:block>
+            </select>
+
+            <label class="form-label" for="sentCurrency">From: </label>
+            <select class="form-control" id="sentCurrency" name="sentCurrency">
+                <option value="KZT">KZT</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+
+            <label class="form-label" for="receivedCurrency">To: </label>
+            <select class="form-control" id="receivedCurrency" name="receivedCurrency">
+                <option value="KZT">KZT</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+
+            <label for="amount" class="form-label">Amount of money, that you'd like to send</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount">
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
 
 </body>
 </html>

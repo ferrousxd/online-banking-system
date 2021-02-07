@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "card")
+@Table(name = "cards")
 public class Card {
 
     @Id
@@ -27,7 +27,7 @@ public class Card {
     private Long id;
 
     @Column(name = "number", unique = true)
-    private String identifier;
+    private String number;
 
     @NonNull
     @Column(name = "balance_kzt")
@@ -51,9 +51,9 @@ public class Card {
     private User user;
 
     @PrePersist
-    public void prePersist() {
-        if (identifier == null) {
-            identifier = RandomCardNumber.getCardNumber();
+    private void prePersist() {
+        if (number == null) {
+            number = RandomCardNumber.getCardNumber();
         }
     }
 }

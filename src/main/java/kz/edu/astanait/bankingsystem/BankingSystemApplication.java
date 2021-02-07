@@ -1,9 +1,7 @@
 package kz.edu.astanait.bankingsystem;
 
-import kz.edu.astanait.bankingsystem.models.Authority;
-import kz.edu.astanait.bankingsystem.models.Card;
-import kz.edu.astanait.bankingsystem.models.Role;
-import kz.edu.astanait.bankingsystem.models.User;
+import kz.edu.astanait.bankingsystem.models.*;
+import kz.edu.astanait.bankingsystem.repositories.ProductRepository;
 import kz.edu.astanait.bankingsystem.repositories.RoleRepository;
 import kz.edu.astanait.bankingsystem.repositories.UserRepository;
 import kz.edu.astanait.bankingsystem.repositories.CardRepository;
@@ -22,7 +20,10 @@ public class BankingSystemApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CardRepository walletRepository) {
+	public CommandLineRunner commandLineRunner(UserRepository userRepository,
+											   RoleRepository roleRepository,
+											   CardRepository walletRepository,
+											   ProductRepository productRepository) {
 		return args -> {
 			Authority adminPage = new Authority("wallet:create");
 			Authority userPage = new Authority("wallet:destroy");
@@ -56,6 +57,19 @@ public class BankingSystemApplication {
 
 			walletRepository.saveAll(
 					List.of(card1, card2, card3, card4, card5)
+			);
+
+			ProductType productType1 = new ProductType("Transfer from card to card");
+			ProductType productType2 = new ProductType("Payments");
+
+			Product product1 = new Product("Transfer money to card of another bank", productType1);
+			Product product2 = new Product("Transfer money to another card of this bank", productType1);
+			Product product3 = new Product("Transfer money to another card of this user", productType1);
+			Product product4 = new Product("Mobile Services", productType2);
+			Product product5 = new Product("House Services", productType2);
+
+			productRepository.saveAll(
+					List.of(product1, product2, product3, product4, product5)
 			);
 		};
 	}

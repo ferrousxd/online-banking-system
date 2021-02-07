@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Products</h1>
+        <p class="lead">What would you like to do?</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <th:block th:each="product : ${products}">
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 th:text="${product.getName()}" class="my-0 fw-normal">Text</h4>
+                    </div>
+                    <div class="card-body">
+                        <a th:href="@{/products/{id}(id=${product.getId()})}" class="w-100 btn btn-lg btn-success">Let's go!</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
+
+</body>
+</html>

@@ -11,11 +11,6 @@ public class WebController {
         return "login";
     }
 
-    @GetMapping(value = {"/", "/services"})
-    public String getServicesPage() {
-        return "services";
-    }
-
     @GetMapping("/admin")
     public String getAdminPage() {
         return "admin";

@@ -7,14 +7,14 @@
 </head>
 <body>
 
-<div th:insert="~{includes/header :: header}"></div>
+<th:block th:insert="~{includes/header :: header}"/>
 
 <main class="container">
     <div class="text-center">
         <p class="display-1">403</p>
         <p class="h1">Access not granted</p>
     </div>
-    <div th:insert="~{includes/footer :: footer}"></div>
+    <th:block th:insert="~{includes/footer :: footer}"/>
 </main>
 
 </body>

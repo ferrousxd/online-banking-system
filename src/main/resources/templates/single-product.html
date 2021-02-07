@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Product</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+    <p class="display-3" th:text="${product.getName()}">Product Name</p>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        Not enough money!
+    </div>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        Transaction was successful
+    </div>
+
+    <th:block th:switch="${product.getId()}">
+        <th:block th:case="1">
+            <th:block th:insert="~{includes/product-forms :: form1}"/>
+        </th:block>
+        <th:block th:case="2">
+            <th:block th:insert="~{includes/product-forms :: form2}"/>
+        </th:block>
+        <th:block th:case="3">
+            <th:block th:insert="~{includes/product-forms :: form3}"/>
+        </th:block>
+        <th:block th:case="4">
+            <th:block th:insert="~{includes/product-forms :: form4}"/>
+        </th:block>
+        <th:block th:case="5">
+            <th:block th:insert="~{includes/product-forms :: form4}"/>
+        </th:block>
+        <th:block th:case="*">
+            <div class="alert alert-danger">
+                There is no suitable form for this operation
+            </div>
+        </th:block>
+    </th:block>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
+</body>
+</html>

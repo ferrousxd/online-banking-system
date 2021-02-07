@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Product</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<!-- Form for transferring money to card of another bank -->
+<div th:fragment="form1">
+    <form method="POST" th:action="@{/cards/transaction}">
+        <input type="hidden" th:value="${product.getId()}" name="productId">
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount of money, that you'd like to send</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount">
+        </div>
+        <div class="mb-3">
+            <label for="senderId" class="form-label">Select one of your cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="senderId" name="senderId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="receiver" class="form-label">Receiver</label>
+            <input type="text" class="form-control" id="receiver" name="receiver">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+</div>
+
+<!-- Form for transferring money to another card of this bank -->
+<div th:fragment="form2">
+    <form method="POST" th:action="@{/cards/transaction}">
+        <input type="hidden" th:value="${product.getId()}" name="productId">
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount of money, that you'd like to send</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount">
+        </div>
+        <div class="mb-3">
+            <label for="senderId" class="form-label">Select one of your cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="senderId" name="senderId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="receiverId" class="form-label">Select one of the cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="receiverId" name="receiverId">
+                <th:block th:each="card : ${allCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+</div>
+
+<!-- Form for transferring money to another card of this bank -->
+<div th:fragment="form3">
+    <form method="POST" th:action="@{/cards/transaction}">
+        <input type="hidden" th:value="${product.getId()}" name="productId">
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount of money, that you'd like to send</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount">
+        </div>
+        <div class="mb-3">
+            <label for="senderId" class="form-label">Select one of your cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="senderId" name="senderId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="receiverId" class="form-label">Select one of the cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="receiverId" name="receiverId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+</div>
+
+<!-- Form for payments (mobile and house services) -->
+<div th:fragment="form4">
+    <form method="POST" th:action="@{/cards/transaction}">
+        <input type="hidden" th:value="${product.getId()}" name="productId">
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount of money, that you'd like to send</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount">
+        </div>
+        <div class="mb-3">
+            <label for="senderId" class="form-label">Select one of your cards</label>
+            <select class="form-select" aria-label=".form-select-lg example" id="senderId" name="senderId">
+                <th:block th:each="card : ${currentUserCards}">
+                    <option th:value="${card.getId()}" th:text="${card.getNumber()}">Card Number</option>
+                </th:block>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+</div>
+
+</body>
+</html>
