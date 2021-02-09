@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction History</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+    <div class="container">
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <td>Amount</td>
+                <td>Date</td>
+                <td>Card Number</td>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="transaction : ${transactions}">
+                <tr>
+                    <td th:text="${transaction.getAmount() + ' KZT'}">Amount</td>
+                    <td th:text="${transaction.getDate()}">Date</td>
+                    <td th:text="${transaction.getCard().getNumber()}">Card Number</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
+
+</body>
+</html>

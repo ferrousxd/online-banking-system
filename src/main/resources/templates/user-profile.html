@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+    <p class="display-3">Change your password</p>
+    <p>Or you can take a look at <a class="link-success" th:href="@{/user/transactions}">your latest transactions</a></p>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        Password has been successfully changed!
+    </div>
+
+    <form method="POST" th:action="@{/user/change-password}">
+        <div class="col-md-4 mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <input type="submit" class="btn btn-success" value="Submit"/>
+    </form>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
+
+</body>
+</html>

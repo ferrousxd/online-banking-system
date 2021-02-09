@@ -2,10 +2,96 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}">
 </head>
 <body>
-<h1>Admin Page</h1>
+
+<th:block th:insert="~{includes/header :: header}"/>
+
+<main class="container">
+
+    <div th:if="${param.success}" class="alert alert-success">
+        New user has been successfully created! The confirmation message was sent to his Email
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-success">
+        Something's wrong in your input data...
+    </div>
+
+    <div class="container p-5">
+        <p class="display-5">Create new user</p>
+        <form method="POST" th:action="@{/user/new}">
+            <div class="col-md-4 mb-3">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+
+                <label for="roleId">Role</label>
+                <select class="form-control" id="roleId" name="roleId" required>
+                    <th:block th:each="role : ${roles}">
+                        <option th:value="${role.getId()}" th:text="${role.getName()}">Role</option>
+                    </th:block>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-success" value="Submit"/>
+        </form>
+    </div>
+
+    <div class="container p-5">
+        <p class="display-5">Search Users by their Phone Number</p>
+        <div>
+            <div class="mb-3">
+                <label for="query" class="form-label">Enter your search query here: </label>
+                <input id="query" class="form-control form-control-lg" type="text" required>
+            </div>
+            <button onclick="renderUsers()" id="searchButton" class="btn btn-success">Search</button>
+            <div class="form-text"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <td>User ID</td>
+                <td>User Email</td>
+                <td>User Phone Number</td>
+                <td>User Password (Encoded)</td>
+            </tr>
+            </thead>
+            <tbody id="searchResults">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container p-5">
+        <p class="display-5">Also, you can take a look at the users transactions by pressing button below</p>
+        <button onclick="renderTransactions()" class="btn btn-success">Render the transactions</button>
+    </div>
+
+    <div class="container">
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <td>Amount</td>
+                <td>Date</td>
+                <td>Card Number</td>
+            </tr>
+            </thead>
+            <tbody id="transactions">
+            </tbody>
+        </table>
+    </div>
+
+    <th:block th:insert="~{includes/footer :: footer}"/>
+</main>
+
+<script type="text/javascript" th:src="@{/js/app.js}"></script>
 </body>
 </html>

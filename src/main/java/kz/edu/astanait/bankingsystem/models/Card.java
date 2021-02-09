@@ -2,9 +2,23 @@ package kz.edu.astanait.bankingsystem.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import kz.edu.astanait.bankingsystem.util.RandomCardNumber;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -52,8 +66,7 @@ public class Card {
 
     @PrePersist
     private void prePersist() {
-        if (number == null) {
+        if (number == null)
             number = RandomCardNumber.getCardNumber();
-        }
     }
 }

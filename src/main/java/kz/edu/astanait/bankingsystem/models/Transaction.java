@@ -14,38 +14,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "products")
-public class Product {
+@Table(name = "transactions")
+public class Transaction {
 
     @Id
     @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
+            name = "transaction_sequence",
+            sequenceName = "transaction_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "product_sequence"
+            generator = "transaction_sequence"
     )
     @Column(name = "id")
     private Long id;
 
     @NonNull
-    @Column(name = "name")
-    private String name;
+    @Column(name = "amount")
+    private Double amount;
+
+    @Column(name = "date")
+    private LocalDate date;
 
     @NonNull
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "product_type_id")
-    private ProductType productType;
+    @JoinColumn(name = "sender_card_id")
+    private Card card;
+
+    @PrePersist
+    private void prePersist() {
+        if (date == null)
+            date = LocalDate.now();
+    }
 }

@@ -27,17 +27,14 @@ public class CardsController {
         return "cards";
     }
 
-    @GetMapping("/{cardId}")
-    public String getSingleCardPage(@PathVariable Long cardId, Model model) {
-        model.addAttribute("card", cardService.findById(cardId));
-        return "single-card";
-    }
-
     @PostMapping("/convert")
     public String convert(@RequestParam("cardId") Long cardId,
                           @RequestParam("sentCurrency") String sentCurrency,
                           @RequestParam("receivedCurrency") String receivedCurrency,
                           @RequestParam("amount") Double amount) {
+        if (amount < 0)
+            return "redirect:/cards?error";
+
         Card card = cardService.findById(cardId);
 
         switch (sentCurrency) {
@@ -65,6 +62,11 @@ public class CardsController {
                                   @RequestParam(value = "receiverId", required = false) Long receiverId,
                                   @RequestParam("amount") Double amount,
                                   RedirectAttributes redirectAttributes) {
+        redirectAttributes.addAttribute("productId", productId);
+
+        if (amount < 0)
+            return "redirect:/products/{productId}?error";
+
         Card card = cardService.findById(senderId);
 
         // 1% from the transaction (transfer money to card of another bank)
@@ -73,7 +75,6 @@ public class CardsController {
             amount *= 0.99;
         }
 
-        redirectAttributes.addAttribute("productId", productId);
         if (card.getBalanceKzt() - amount < 0) {
             return "redirect:/products/{productId}?error";
         }

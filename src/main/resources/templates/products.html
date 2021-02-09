@@ -23,6 +23,12 @@
                         <h4 th:text="${product.getName()}" class="my-0 fw-normal">Text</h4>
                     </div>
                     <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Lorem ipsum dolor sit amet,</li>
+                            <li>consectetur adipiscing elit,</li>
+                            <li>sed do eiusmod tempor incididunt</li>
+                            <li>ut labore et dolore magna aliqua.</li>
+                        </ul>
                         <a th:href="@{/products/{id}(id=${product.getId()})}" class="w-100 btn btn-lg btn-success">Let's go!</a>
                     </div>
                 </div>
